@@ -42,7 +42,7 @@ resource "aws_internet_gateway" "crm-igw" {
 }
 # crm public route table
 resource "aws_route_table" "crm-public-rt" {
-  vpc_id = aws_vpc.vpc-crm.id
+  vpc_id = aws_vpc.crm-vpc.id
 
   route {
     cidr_block = "0.0.0.0/0"
@@ -54,8 +54,24 @@ resource "aws_route_table" "crm-public-rt" {
 }
 # crm pvt route table
 resource "aws_route_table" "crm-pvt-rt" {
-  vpc_id = aws_vpc.vpc-crm.id
+  vpc_id = aws_vpc.crm-vpc.id
   tags = {
     Name = "crm-pvt-rt"
   }
 }
+#crm-pub-asso
+resource "aws_route_table_association" "crm-pub-ass" {
+  subnet_id      = aws_subnet.crm-web-sn.id
+  route_table_id = aws_route_table.crm-public-rt.id
+}
+
+resource "aws_route_table_association" "crm-pub-ass" {
+  subnet_id      = aws_subnet.crm-api-sn.id
+  route_table_id = aws_route_table.crm-public-rt.id
+}
+resource "aws_route_table_association" "crm-pvt-ass" {
+  subnet_id      = aws_subnet.crm-db-sn.id
+  route_table_id = aws_route_table.crm-pvt-rt.id
+}
+
+# nacls
