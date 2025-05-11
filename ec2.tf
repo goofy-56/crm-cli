@@ -5,5 +5,5 @@ resource "aws_instance" "loading" {
 subnet_id   = aws_subnet.crm-web-sn.id
 key_name = almas.pem
 vpc_security_group_ids = aws_security_group_crm-web-security.id
-user data = file("setup.sh")
+user_data = file("setup.sh")
 }
