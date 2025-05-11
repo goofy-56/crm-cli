@@ -65,7 +65,7 @@ resource "aws_route_table_association" "crm-pub-ass" {
   route_table_id = aws_route_table.crm-public-rt.id
 }
 
-resource "aws_route_table_association" "crm-pub-ass" {
+resource "aws_route_table_association" "crm-api-pub-ass" {
   subnet_id      = aws_subnet.crm-api-sn.id
   route_table_id = aws_route_table.crm-public-rt.id
 }
