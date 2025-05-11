@@ -175,25 +175,25 @@ resource "aws_security_group" "crm-web-security" {
 }
 # crm-web-security-group-ingress
 resource "aws_vpc_security_group_ingress_rule" "crm-web-sg-ingress-ssh" {
-  security_group_id = aws_security_group.crm-web-sg.id
+  security_group_id = aws_security_group.crm-web-security.id
   cidr_ipv4         = "0.0.0.0/0"
   from_port         = 22
   ip_protocol       = "tcp"
   to_port           = 22
 }
 resource "aws_vpc_security_group_ingress_rule" "crm-web-sg-ingress-http" {
-  security_group_id = aws_security_group.crm-web-sg.id
+  security_group_id = aws_security_group.crm-web-security.id
   cidr_ipv4         = "0.0.0.0/0"
   from_port         = 80
   ip_protocol       = "tcp"
   to_port           = 80
 }
 resource "aws_vpc_security_group_egress_rule" "crm-web-sg-engress" {
-  security_group_id = aws_security_group.crm-web-sg.id
+  security_group_id = aws_security_group.crm-web-security.id
   cidr_ipv4         = "0.0.0.0/0"
   ip_protocol       = "-1" # semantically equivalent to all ports
 }
-# security group
+# api security group
 resource "aws_security_group" "crm-api-security" {
   name        = "crm-api-sg"
   description = "Allow ssh & nodejs"
@@ -205,25 +205,25 @@ resource "aws_security_group" "crm-api-security" {
 }
 # crm-web-security-group-ingress
 resource "aws_vpc_security_group_ingress_rule" "crm-api-sg-ingress-ssh" {
-  security_group_id = aws_security_group.crm-api-sg.id
+  security_group_id = aws_security_group.crm-api-security.id
   cidr_ipv4         = "0.0.0.0/0"
   from_port         = 22
   ip_protocol       = "tcp"
   to_port           = 22
 }
 resource "aws_vpc_security_group_ingress_rule" "crm-web-sg-ingress-nodejs" {
-  security_group_id = aws_security_group.crm-api-sg.id
+  security_group_id = aws_security_group.crm-api-security.id
   cidr_ipv4         = "0.0.0.0/0"
   from_port         = 8080
   ip_protocol       = "tcp"
   to_port           = 8080
 }
 resource "aws_vpc_security_group_egress_rule" "crm-api-sg-engress" {
-  security_group_id = aws_security_group.crm-api-sg.id
+  security_group_id = aws_security_group.crm-api-security.id
   cidr_ipv4         = "0.0.0.0/0"
   ip_protocol       = "-1" # semantically equivalent to all ports
 }
-# security group
+# db security group
 resource "aws_security_group" "crm-db-security" {
   name        = "crm-db-sg"
   description = "Allow ssh & postgres"
@@ -235,21 +235,21 @@ resource "aws_security_group" "crm-db-security" {
 }
 # crm-web-security-group-ingress
 resource "aws_vpc_security_group_ingress_rule" "crm-db-sg-ingress-ssh" {
-  security_group_id = aws_security_group.crm-db-sg.id
+  security_group_id = aws_security_group.crm-db-security.id
   cidr_ipv4         = "10.0.0.0/16"
   from_port         = 22
   ip_protocol       = "tcp"
   to_port           = 22
 }
 resource "aws_vpc_security_group_ingress_rule" "crm-db-sg-ingress-postgres" {
-  security_group_id = aws_security_group.crm-web-sg.id
+  security_group_id = aws_security_group.crm-db-security.id
   cidr_ipv4         = "10.0.0.0/16"
   from_port         = 5432
   ip_protocol       = "tcp"
   to_port           = 5432
 }
 resource "aws_vpc_security_group_egress_rule" "crm-db-sg-engress" {
-  security_group_id = aws_security_group.crm-db-sg.id
+  security_group_id = aws_security_group.crm-db-security.id
   cidr_ipv4         = "0.0.0.0/0"
   ip_protocol       = "-1" # semantically equivalent to all ports
 }
