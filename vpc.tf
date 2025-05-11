@@ -32,3 +32,30 @@ resource "aws_subnet" "crm-db-sn" {
     Name = "crm-db-sn"
   }
 }
+#internet gateway
+resource "aws_internet_gateway" "crm-igw" {
+  vpc_id = aws_vpc.crm-vpc.id
+
+  tags = {
+    Name = "crm-igw"
+  }
+}
+# crm public route table
+resource "aws_route_table" "crm-public-rt" {
+  vpc_id = aws_vpc.vpc-crm.id
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.crm-igw.id
+  }
+  tags = {
+    Name = "crm-public-rt"
+  }
+}
+# crm pvt route table
+resource "aws_route_table" "crm-pvt-rt" {
+  vpc_id = aws_vpc.vpc-crm.id
+  tags = {
+    Name = "crm-pvt-rt"
+  }
+}
